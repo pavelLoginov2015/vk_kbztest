@@ -89,12 +89,12 @@
     <script type="text/javascript">
 
       vkBridge.send('VKWebAppInit');
-      GetUserInfo();
+      GetUserInfo()
     function GetUserInfo()
     {
       vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
         console.log(_info);
-        unityI.SendMessage('SocialNet', 'GetApiData', JSON.stringify(_info));
+        unityI.SendMessage('SN', 'GetApiData', JSON.stringify(_info));
       });
     }
   </script>
