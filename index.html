@@ -93,7 +93,7 @@
     {
       vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
         console.log(_info);
-        unityI.SendMessage('Server', 'GetApiData', JSON.stringify(_info));
+        unityI.SendMessage('SN', 'GetApiData', JSON.stringify(_info));
       });
     }
   </script>
