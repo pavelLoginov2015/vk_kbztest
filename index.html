@@ -8,17 +8,23 @@
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
+    
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/canket.json", {onProgress: UnityProgress});
-      function GetUserData()
+      
+      
+    </script>
+     <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+
+     <script type="text/javascript">
+    function GetUserData()
     {
         vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
         console.log(_info);
         gameInstance.SendMessage('PhpServer', 'GetResponseUserData', JSON.stringify(_info));
       });
     }
-    </script>
-    
+      </script>
   </head>
   
   <body>
