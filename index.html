@@ -11,6 +11,18 @@
 			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
 		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
 		-->
+		
+		</script>
+					<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+		<script>
+
+			function GetUserData()
+    {
+        vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
+        console.log(_info);
+        u.SendMessage('PhpServer', 'GetResponseUserData', JSON.stringify(_info));
+      });
+    }
 		</script>
 		<script type="text/javascript">
 		<!--
@@ -57,16 +69,9 @@
 					}
 				});
 				u.initPlugin(jQuery("#unityPlayer")[0], "canket.unity3d");
-				
+		
 			});
-			<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-			function GetUserData()
-    {
-        vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
-        console.log(_info);
-        gameInstance.SendMessage('PhpServer', 'GetResponseUserData', JSON.stringify(_info));
-      });
-    }
+			
 		-->
 		</script>
 		<style type="text/css">
@@ -142,4 +147,5 @@
 		</div>
 		<p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
 	</body>
+	
 </html>
