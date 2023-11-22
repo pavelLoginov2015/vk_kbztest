@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 app.use(cors({
     origin: "https://st-sntr-cub2reborn.ru",
-    methods: ["GET","POST"],
 })
 )
 function unityFramework(Module) 
