@@ -1,15 +1,58 @@
+Skip to content
+tender322
+/
+VKGAME-INDEX
+
+Type / to search
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Files
+Go to file
+t
+.gitattributes
+index.html
+Documentation • Share feedback
+Pane width
+Use a value between 20% and 25%
+
+0
+Change width
+BreadcrumbsVKGAME-INDEX
+/index.html
+Latest commit
+tender322
+tender322
+Update index.html
+2749618
+ · 
+2 years ago
+History
+BreadcrumbsVKGAME-INDEX
+/index.html
+File metadata and controls
+
+Code
+
+Blame
+122 lines (106 loc) · 3.99 KB
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | DefenderCraft</title>
+    <title>Unity WebGL Player | VIDEOS</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=940 height=580></canvas>
+      <canvas id="unity-canvas"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -22,20 +65,20 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">DefenderCraft</div>
+        <div id="unity-build-title">VIDEOS</div>
       </div>
     </div>
     <script>
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/DefenderCraft.loader.js";
+      var loaderUrl = buildUrl + "/vkv1.loader.js";
       var config = {
-        dataUrl: buildUrl + "/DefenderCraft.data",
-        frameworkUrl: buildUrl + "/DefenderCraft.framework.js",
-        codeUrl: buildUrl + "/DefenderCraft.wasm",
+        dataUrl: buildUrl + "/DefenderCraft.data.unityweb",
+        frameworkUrl: buildUrl + "/DefenderCraft.framework.unityweb",
+        codeUrl: buildUrl + "/DefenderCraft.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "Sontar",
-        productName: "DefenderCraft",
-        productVersion: "0.1",
+        companyName: "DefaultCompany",
+        productName: "VIDEOS",
+        productVersion: "1.0",
       };
 
       var container = document.querySelector("#unity-container");
@@ -45,34 +88,27 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var mobileWarning = document.querySelector("#unity-mobile-warning");
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
-
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
         config.devicePixelRatio = 1;
         mobileWarning.style.display = "block";
         setTimeout(() => {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        canvas.style.width = "940px";
-        canvas.style.height = "580px";
+        canvas.style.width = "960px";
+        canvas.style.height = "600px";
       }
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
+      var unityI = null;
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
+          unityI = unityInstance;
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
@@ -83,5 +119,22 @@
       };
       document.body.appendChild(script);
     </script>
+
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+
+    <script type="text/javascript">
+
+      vkBridge.send('VKWebAppInit');
+
+
+
+      function GetVkProfileJson(){
+        vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
+          console.log(_info);
+          unityI.SendMessage('SN', 'OnPlatformVKInitialized', JSON.stringify(_info));
+        });
+      }
+    </script>
+    
   </body>
 </html>
